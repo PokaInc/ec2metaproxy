@@ -14,7 +14,8 @@ ExecStop=/usr/bin/docker stop ec2metaproxy
 ExecStop=/bin/sh -c "iptables -D PREROUTING -p tcp --dport 80 -d 169.254.169.254 -t nat -j DNAT --to-destination $COREOS_PRIVATE_IPV4:$METADATA_PROXY_PORT -i docker0"
 ExecStop=/bin/sh -c "iptables -D INPUT -p tcp --dport $METADATA_PROXY_PORT ! -i docker0 -j DROP"
 Restart=on-failure
+
 [X-Fleet]
 Global=true
-MachineMetadata="dataPlane=true"
+MachineMetadata=ec2metaproxy_enabled=true
 
